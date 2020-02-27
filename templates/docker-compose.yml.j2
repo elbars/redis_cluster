@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  redis-server:
+    image: '{{ redis_server_image }}'
+    network_mode: host
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_REPLICATION_MODE=master
+    volumes:
+      - './server/data:/bitnami/redis/data'
+      - './server/conf:/opt/bitnami/redis/etc'
+
+  redis-sentinel:
+    image: '{{ redis_sentinel_image }}'
+    network_mode: host
+    restart: always
+    volumes:
+      - './sentinel/conf:/bitnami/redis-sentinel/conf'
